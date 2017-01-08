@@ -21,6 +21,16 @@
     
     JHSpinner *spinner = [[JHSpinner alloc] initWithFrame:CGRectMake(20, 64, 300, 44) andOptions:@[@"大",@"屁",@"鑫",@"哈哈哈"] onView:self.view];
     [self.view addSubview:spinner];
+    
+    spinner.layer.borderColor = [[UIColor blackColor] CGColor];
+    spinner.layer.borderWidth = 1;
+    spinner.layer.cornerRadius = 3;
+    spinner.layer.masksToBounds = YES;
+    
+    spinner.optionsView.layer.borderColor = [[UIColor blackColor] CGColor];
+    spinner.optionsView.layer.borderWidth = 1;
+    spinner.optionsView.layer.cornerRadius = 3;
+    spinner.optionsView.layer.masksToBounds = YES;
 }
 
 

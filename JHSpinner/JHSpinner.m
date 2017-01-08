@@ -60,6 +60,7 @@ static NSString * const cellId = @"JHSpinnerCellId";
     self.parentView = contentView;
     _isOpen = NO;
     _currentIndex = 0;
+    _duration = 3;
     
     //init self as a button
     [self.layer setBorderColor:[UIColor blackColor].CGColor];
@@ -77,8 +78,6 @@ static NSString * const cellId = @"JHSpinnerCellId";
     //init table
     self.optionsView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     [_parentView insertSubview:_optionsView aboveSubview:self];
-    _optionsView.layer.borderColor = [[UIColor blackColor] CGColor];
-    _optionsView.layer.borderWidth = 1;
     _optionsView.hidden = YES;
     _optionsView.delegate = self;
     _optionsView.dataSource = self;
@@ -115,14 +114,14 @@ static NSString * const cellId = @"JHSpinnerCellId";
     newOrigin.y += CGRectGetHeight(self.frame);
     newOrigin.y --;
     
-    CGRect oldFrame = self.frame;
+    CGRect oldFrame = CGRectMake(0, 0, CGRectGetWidth(self.frame), 0);
     oldFrame.origin = newOrigin;
     [_optionsView setFrame:oldFrame];
     
     CGRect newFrame = self.frame;
     newFrame.size = CGSizeMake(CGRectGetWidth(newFrame), [self generateHeightWithNumberOfRow:_options.count]);
     newFrame.origin = newOrigin;
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:_duration animations:^{
         [_optionsView setFrame:newFrame];
     } completion:^(BOOL finished) {
         //make it able to click again
@@ -136,12 +135,10 @@ static NSString * const cellId = @"JHSpinnerCellId";
     //make it unclickable
     self.userInteractionEnabled = NO;
     
-    CGRect newFrame = self.frame;
-    CGPoint newOrigin = newFrame.origin;
-    newOrigin.y += CGRectGetHeight(newFrame);
-    newOrigin.y --;
-    newFrame.origin = newOrigin;
-    [UIView animateWithDuration:0.3 animations:^{
+    CGRect newFrame = _optionsView.frame;
+    CGSize newSize = CGSizeMake(CGRectGetWidth(self.frame), 0);
+    newFrame.size = newSize;
+    [UIView animateWithDuration:_duration animations:^{
         [_optionsView setFrame:newFrame];
     } completion:^(BOOL finished) {
         _optionsView.hidden = YES;
